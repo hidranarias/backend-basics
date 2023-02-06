@@ -1,7 +1,8 @@
 {% extends template('page-blank') %}
 
 {% define data = {
-    antelope: _view.antelope
+    antelope: _view.antelope,
+    store:_view.store
 } %}
 
 {% block body %}
@@ -10,4 +11,5 @@
     {% else %}
         No antelope found :(
     {% endif %}
+    <p>Store: {{ data.store.name }}</p>
 {% endblock %}

@@ -20,9 +20,14 @@ class AntelopeController extends AbstractController
         $antelopeResponseTransfer = $this->getFactory()
             ->getTrainingClient()
             ->findAntelope($antelopeCriteriaTransfer);
-
+        $currentStore = $this->getFactory()
+            ->getStoreClient()
+            ->getCurrentStore();
         return $this->view(
-            ['antelope' => $antelopeResponseTransfer->getAntelope()],
+            [
+                'antelope' => $antelopeResponseTransfer->getAntelope(),
+                'store' => $currentStore
+            ],
             [],
             '@TrainingPage/views/antelope/get.twig'
         );
