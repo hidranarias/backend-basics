@@ -182,6 +182,7 @@ services:
         endpoints:
             localhost:3306:
                 protocol: tcp
+
     broker:
         engine: rabbitmq
         version: '3.9'
