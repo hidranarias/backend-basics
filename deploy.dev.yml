@@ -169,6 +169,10 @@ groups:
                     backend-api.us.spryker.local:
                         store: US
 services:
+    webdriver:
+        engine: chromedriver
+        ports:
+            - 4444:4444
     database:
         engine: mysql
         version: mariadb-10.4
