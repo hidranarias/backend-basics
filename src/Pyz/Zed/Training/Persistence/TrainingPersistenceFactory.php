@@ -11,4 +11,6 @@ class TrainingPersistenceFactory extends AbstractPersistenceFactory
     {
         return PyzAntelopeQuery::create();
     }
+
+
 }

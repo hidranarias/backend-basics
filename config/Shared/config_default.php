@@ -226,10 +226,10 @@ $config[OauthConstants::PRIVATE_KEY_PATH] = str_replace(
 $config[OauthConstants::PUBLIC_KEY_PATH]
     = $config[OauthCryptographyConstants::PUBLIC_KEY_PATH]
     = str_replace(
-        '__LINE__',
-        PHP_EOL,
-        getenv('SPRYKER_OAUTH_KEY_PUBLIC') ?: '',
-    ) ?: null;
+    '__LINE__',
+    PHP_EOL,
+    getenv('SPRYKER_OAUTH_KEY_PUBLIC') ?: '',
+) ?: null;
 $config[OauthConstants::ENCRYPTION_KEY] = getenv('SPRYKER_OAUTH_ENCRYPTION_KEY') ?: null;
 $config[OauthConstants::OAUTH_CLIENT_IDENTIFIER] = getenv('SPRYKER_OAUTH_CLIENT_IDENTIFIER') ?: null;
 $config[OauthConstants::OAUTH_CLIENT_SECRET] = getenv('SPRYKER_OAUTH_CLIENT_SECRET') ?: null;
@@ -338,8 +338,14 @@ $config[StorageRedisConstants::STORAGE_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_S
 $config[StorageRedisConstants::STORAGE_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
 $config[StorageRedisConstants::STORAGE_REDIS_PASSWORD] = getenv('SPRYKER_KEY_VALUE_STORE_PASSWORD');
 $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
-$config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_SOURCE_NAMES') ?: '[]', true) ?: [];
-$config[StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTION_OPTIONS') ?: '[]', true) ?: [];
+$config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = json_decode(
+    getenv('SPRYKER_KEY_VALUE_STORE_SOURCE_NAMES') ?: '[]',
+    true
+) ?: [];
+$config[StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS] = json_decode(
+    getenv('SPRYKER_KEY_VALUE_STORE_CONNECTION_OPTIONS') ?: '[]',
+    true
+) ?: [];
 
 // >>> SESSION
 
@@ -488,7 +494,9 @@ $config[SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
             getenv('SPRYKER_SCHEDULER_HOST'),
             getenv('SPRYKER_SCHEDULER_PORT'),
         ),
-        SchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED => (bool)getenv('SPRYKER_JENKINS_CSRF_PROTECTION_ENABLED'),
+        SchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED => (bool)getenv(
+            'SPRYKER_JENKINS_CSRF_PROTECTION_ENABLED'
+        ),
     ],
 ];
 
@@ -560,12 +568,14 @@ $config[ApplicationConstants::BASE_URL_YVES]
     = $config[ProductManagementConstants::BASE_URL_YVES]
     = $config[NewsletterConstants::BASE_URL_YVES]
     = sprintf(
-        'https://%s%s',
-        $yvesHost,
-        $yvesPort !== 443 ? ':' . $yvesPort : '',
-    );
+    'https://%s%s',
+    $yvesHost,
+    $yvesPort !== 443 ? ':' . $yvesPort : '',
+);
 
-$config[ShopUiConstants::YVES_ASSETS_URL_PATTERN] = '/assets/' . (getenv('SPRYKER_BUILD_HASH') ?: 'current') . '/%theme%/';
+$config[ShopUiConstants::YVES_ASSETS_URL_PATTERN] = '/assets/' . (getenv(
+        'SPRYKER_BUILD_HASH'
+    ) ?: 'current') . '/%theme%/';
 
 // ----------------------------------------------------------------------------
 // ------------------------------ API -----------------------------------------
@@ -575,16 +585,18 @@ $glueHost = getenv('SPRYKER_API_HOST') ?: 'localhost';
 $gluePort = (int)(getenv('SPRYKER_API_PORT')) ?: 443;
 $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN]
     = sprintf(
-        'https://%s%s',
-        $glueHost,
-        $gluePort !== 443 ? ':' . $gluePort : '',
-    );
+    'https://%s%s',
+    $glueHost,
+    $gluePort !== 443 ? ':' . $gluePort : '',
+);
 
 if (class_exists(TestifyConstants::class)) {
     $config[TestifyConstants::GLUE_APPLICATION_DOMAIN] = $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN];
 }
 
-$config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '';
+$config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv(
+    'SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN'
+) ?: '';
 
 // ----------------------------------------------------------------------------
 // ------------------------------ OMS -----------------------------------------
@@ -675,7 +687,9 @@ $config[MessageBrokerAwsConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP] = [
 
 $aopInfrastructureConfiguration = json_decode(html_entity_decode((string)getenv('SPRYKER_AOP_INFRASTRUCTURE')), true);
 
-$config[MessageBrokerAwsConstants::SQS_RECEIVER_CONFIG] = json_encode($aopInfrastructureConfiguration['SPRYKER_MESSAGE_BROKER_SQS_RECEIVER_CONFIG'] ?? []);
+$config[MessageBrokerAwsConstants::SQS_RECEIVER_CONFIG] = json_encode(
+    $aopInfrastructureConfiguration['SPRYKER_MESSAGE_BROKER_SQS_RECEIVER_CONFIG'] ?? []
+);
 $config[MessageBrokerAwsConstants::HTTP_SENDER_CONFIG] = $aopInfrastructureConfiguration['SPRYKER_MESSAGE_BROKER_HTTP_SENDER_CONFIG'] ?? [];
 
 // ----------------------------------------------------------------------------
@@ -696,6 +710,11 @@ $config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE] = 'ao
 // ----------------------------------------------------------------------------
 // ------------------------------ Product Configuration ---------------------------------------
 // ----------------------------------------------------------------------------
-$config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY') ?: 'change123';
-$config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: '0c1ffefeebdab4a3d839d0e52590c9a2';
+$config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY] = getenv(
+    'SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY'
+) ?: 'change123';
+$config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR] = getenv(
+    'SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR'
+) ?: '0c1ffefeebdab4a3d839d0e52590c9a2';
 $config[KernelConstants::DOMAIN_WHITELIST][] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST');
+$config['hidran-name'] = 'Hidran Arias';
