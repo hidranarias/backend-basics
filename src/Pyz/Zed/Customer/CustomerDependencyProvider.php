@@ -11,6 +11,8 @@ use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Customer\AvailabilityNotificationSubscriptionCustomerTransferExpanderPlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\CustomerAnonymizer\AvailabilityNotificationAnonymizerPlugin;
 use Spryker\Zed\Customer\CustomerDependencyProvider as SprykerCustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface;
+use Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface;
 use Spryker\Zed\CustomerGroup\Communication\Plugin\CustomerAnonymizer\RemoveCustomerFromGroupPlugin;
 use Spryker\Zed\CustomerUserConnector\Communication\Plugin\CustomerTransferUsernameExpanderPlugin;
 use Spryker\Zed\Kernel\Container;
@@ -27,11 +29,12 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
      * @var string
      */
     public const PYZ_NEWSLETTER_FACADE = 'newsletter facade';
+    public const  FACADE_TRAINING = 'FACADE_TRAINING';
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return Container
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
@@ -44,12 +47,12 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
         $container->set(static::PYZ_NEWSLETTER_FACADE, function (Container $container) {
             return $container->getLocator()->newsletter()->facade();
         });
-
+        $container = $this->addTrainingFacade($container);
         return $container;
     }
 
     /**
-     * @return array<\Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface>
+     * @return array<CustomerAnonymizerPluginInterface>
      */
     protected function getCustomerAnonymizerPlugins(): array
     {
@@ -63,7 +66,7 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface>
+     * @return array<CustomerTransferExpanderPluginInterface>
      */
     protected function getCustomerTransferExpanderPlugins(): array
     {
@@ -71,5 +74,14 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
             new CustomerTransferUsernameExpanderPlugin(),
             new AvailabilityNotificationSubscriptionCustomerTransferExpanderPlugin(),
         ];
+    }
+
+    protected function addTrainingFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRAINING, function (Container $container) {
+            return $container->getLocator()->training()->facade();
+        });
+
+        return $container;
     }
 }
