@@ -25,7 +25,9 @@ class TrainingRepository extends AbstractRepository implements TrainingRepositor
         }
 
         $antelopeEntity = $antelopeQuery->findOne();
-
+        if (!$antelopeEntity) {
+            return null;
+        }
         return (new AntelopeTransfer())->fromArray($antelopeEntity->toArray(), true);
     }
 }
